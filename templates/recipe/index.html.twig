@@ -6,10 +6,12 @@
     <p>
         Lorem blabu gtre dqhdojsdh dqhkd fdsqfhdi fidhdd df dsijhfodfoi Lorem blabu gtre dqhdojsdh dqhkd fdsqfhdi fidhdd df dsijhfodfoi Lorem blabu gtre dqhdojsdh dqhkd fdsqfhdi fidhdd df dsijhfodfoi
     </p>
-    <ul class="navbar-nav">
-         
-        <li class="nav-item">
-            <a class="navbar-link" href="{{ path('recipe.show', {id: 32, slug: 'pate-bolognaise'}) }}">Pâte bolognaise</a>
+    <ul>
+
+        {% for recipe in recipes %} 
+        <li>
+            <a class="navbar-link" href="{{ path('recipe.show', {id: recipe.id, slug: recipe.slug}) }}">{{ recipe.title }}</a>
         </li>
+        {% endfor %}
     </ul>
 {% endblock %}

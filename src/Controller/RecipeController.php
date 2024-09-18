@@ -2,18 +2,23 @@
 
 namespace App\Controller;
 
+use App\Demo;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RecipeController extends AbstractController
 {
+
+    
 
     #[Route('/recipe', name: 'recipe.index')]
     public function index(Request $request, RecipeRepository $repository): Response
@@ -37,9 +42,9 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/recipe/{id}/edit', name: 'recipe.edit', methods: ['GET', 'POST'])]
-    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em) 
+    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em, FormFactoryInterface $formFactory) 
     {
-        $form = $this->createForm(RecipeType::class, $recipe);
+        $form = $formFactory->create(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe->setUpdatedAt(new \DateTimeImmutable());
